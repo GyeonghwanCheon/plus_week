@@ -12,9 +12,12 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface ReservationRepository extends JpaRepository<Reservation, Long> {
+public interface ReservationRepository extends JpaRepository<Reservation, Long>, ReservationRepositoryCustom {
 
-    @EntityGraph(attributePaths = {"user", "item"})
+//    @EntityGraph(attributePaths = {"user", "item"})
+//    List<Reservation> findAll();
+
+    @Query("SELECT r FROM Reservation r JOIN FETCH r.user u JOIN FETCH r.item i")
     List<Reservation> findAllUserAndItem();
 
     List<Reservation> findByUserIdAndItemId(Long userId, Long itemId);
