@@ -35,4 +35,12 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long>,
             @Param("startAt") LocalDateTime startAt,
             @Param("endAt") LocalDateTime endAt
     );
+
+
+    default Reservation findByReservationOrElseThrow(Long reservationId) {
+        return findById(reservationId).orElseThrow(
+                () -> new IllegalArgumentException("해당 ID에 맞는 데이터가 존재하지 않습니다.")
+        );
+    }
+
 }
