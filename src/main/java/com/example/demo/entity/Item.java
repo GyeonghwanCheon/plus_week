@@ -36,5 +36,10 @@ public class Item {
         this.owner = owner;
     }
 
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     public Item() {}
+
 }

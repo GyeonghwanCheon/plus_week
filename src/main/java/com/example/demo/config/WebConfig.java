@@ -39,7 +39,7 @@ public class WebConfig implements WebMvcConfigurer {
                 .addPathPatterns(USER_ROLE_REQUIRED_PATH_PATTERNS)
                 .order(Ordered.HIGHEST_PRECEDENCE + 2);
 
-        registry.addInterceptor(authInterceptor)
+        registry.addInterceptor(adminRoleInterceptor)
                 .addPathPatterns(ADMIN_ROLE_REQUIRED_PATH_PATTERNS)
                 .order(Ordered.HIGHEST_PRECEDENCE + 1);
     }
