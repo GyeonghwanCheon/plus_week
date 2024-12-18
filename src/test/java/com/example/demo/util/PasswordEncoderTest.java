@@ -1,6 +1,5 @@
-package com.example.demo;
+package com.example.demo.util;
 
-import com.example.demo.util.PasswordEncoder;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -25,7 +24,7 @@ public class PasswordEncoderTest {
     }
 
     @Test
-    void matches_ShouldReturnTrue_WhenPasswordMatches() {
+    void PasswordMatches() {
         // Given: 원본 비밀번호를 암호화
         String rawPassword = "1234qwer!";
         String encodedPassword = PasswordEncoder.encode(rawPassword);
@@ -41,7 +40,7 @@ public class PasswordEncoderTest {
      * matches 메서드가 잘못된 비밀번호와 암호화된 비밀번호를 비교했을 때 false를 반환하는지 테스트
      */
     @Test
-    void matches_ShouldReturnFalse_WhenPasswordDoesNotMatch() {
+    void PasswordNotMatch() {
         // Given: 원본 비밀번호를 암호화
         String rawPassword = "1234qwer!";
         String wrongPassword = "4321qwer!";

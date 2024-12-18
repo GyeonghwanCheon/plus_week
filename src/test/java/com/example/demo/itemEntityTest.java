@@ -16,7 +16,7 @@ public class itemEntityTest {
 
         // When: Item 객체 생성 및 status 필드를 null로 설정
         Item item = new Item("Laptop", "Gaming Laptop", manager, owner);
-//        item.setStatus(null);
+
 
         // Then: null 상태값 설정이 예외를 발생시키는지 확인
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
