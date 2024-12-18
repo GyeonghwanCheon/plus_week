@@ -40,7 +40,7 @@ public class PasswordEncoderTest {
      * matches 메서드가 잘못된 비밀번호와 암호화된 비밀번호를 비교했을 때 false를 반환하는지 테스트
      */
     @Test
-    void PasswordNotMatch() {
+    void PasswordNotMatches() {
         // Given: 원본 비밀번호를 암호화
         String rawPassword = "1234qwer!";
         String wrongPassword = "4321qwer!";
