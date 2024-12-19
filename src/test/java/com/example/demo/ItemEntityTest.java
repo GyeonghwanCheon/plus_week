@@ -21,7 +21,6 @@ public class ItemEntityTest {
 
     @Autowired
     private ItemRepository itemRepository;
-
     @Autowired
     private UserRepository userRepository;
 
@@ -39,7 +38,6 @@ public class ItemEntityTest {
 
         // Then: null 상태값 설정이 예외를 발생시키는지 확인
         assertThrows(ConstraintViolationException.class, () -> itemRepository.saveAndFlush(item) );
-
 
     }
 }
