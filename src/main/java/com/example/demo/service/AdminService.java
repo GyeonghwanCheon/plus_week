@@ -31,6 +31,7 @@ public class AdminService {
         List<Long> missingIds = userIds.stream()
                 .filter(id -> !foundUserIds.contains(id))
                 .collect(Collectors.toList());
+
         if (!missingIds.isEmpty()) {
             throw new IllegalArgumentException("다음 ID는 존재하지 않습니다: " + missingIds);
         }

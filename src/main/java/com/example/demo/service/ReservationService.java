@@ -109,29 +109,38 @@ public class ReservationService {
         Reservation reservation = reservationRepository.findByReservationOrElseThrow(reservationId);
 
         if (ReservationStatus.APPROVED.name().equals(status)) {
-            if (reservation.getStatus() != ReservationStatus.PENDING) {
-                throw new IllegalArgumentException("PENDING 상태만 APPROVED로 변경 가능합니다.");
-            }
+            validateStatus(reservation.getStatus() == ReservationStatus.PENDING,
+                    "PENDING 상태만 APPROVED로 변경 가능합니다.");
             reservation.updateStatus(ReservationStatus.APPROVED);
             return;
         }
 
         if (ReservationStatus.CANCELED.name().equals(status)) {
-            if (reservation.getStatus() == ReservationStatus.EXPIRED) {
-                throw new IllegalArgumentException("EXPIRED 상태인 예약은 취소할 수 없습니다.");
-            }
+            validateStatus(reservation.getStatus() != ReservationStatus.EXPIRED,
+                    "EXPIRED 상태인 예약은 취소할 수 없습니다.");
             reservation.updateStatus(ReservationStatus.CANCELED);
             return;
         }
 
         if (ReservationStatus.EXPIRED.name().equals(status)) {
-            if (reservation.getStatus() != ReservationStatus.PENDING) {
-                throw new IllegalArgumentException("PENDING 상태만 EXPIRED로 변경 가능합니다.");
-            }
+            validateStatus(reservation.getStatus() == ReservationStatus.PENDING,
+                    "PENDING 상태만 EXPIRED로 변경 가능합니다.");
             reservation.updateStatus(ReservationStatus.EXPIRED);
             return;
         }
 
         throw new IllegalArgumentException("올바르지 않은 상태: " + status);
+    }
+
+    /**
+     * 조건 검증 메서드
+     * @param condition
+     * @param errorMessage
+     */
+    private void validateStatus(boolean condition, String errorMessage) {
+        // condition이 false일 경우 Exception을 발생, true일 경우 계속 진행
+        if (!condition) {
+            throw new IllegalArgumentException(errorMessage);
+        }
     }
 }
