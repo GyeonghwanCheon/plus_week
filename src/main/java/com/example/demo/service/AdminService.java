@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class AdminService {
@@ -18,14 +19,21 @@ public class AdminService {
     // TODO: 4. find or save 예제 개선
     @Transactional
     public void reportUsers(List<Long> userIds) {
-        //존재하지 않는 ID가 있는지 확인
-        for (Long userId : userIds) {
-            if(!userRepository.existsById(userId)){
-                throw new IllegalArgumentException("해당 ID에 맞는 값이 존재하지 않습니다.");
-            }
-        }
-        // 한 번의 쿼리로 모든 사용자 조회
+        // userIds로 모든 사용자 조회
         List<User> users = userRepository.findAllById(userIds);
+
+        // 조회된 사용자의 ID 목록을 추출
+        List<Long> foundUserIds = users.stream()
+                .map(User::getId)
+                .collect(Collectors.toList());
+
+        // userIds 중 존재하지 않는 ID 검증
+        List<Long> missingIds = userIds.stream()
+                .filter(id -> !foundUserIds.contains(id))
+                .collect(Collectors.toList());
+        if (!missingIds.isEmpty()) {
+            throw new IllegalArgumentException("다음 ID는 존재하지 않습니다: " + missingIds);
+        }
 
         // 상태 없데이트
         users.forEach(User::updateStatusToBlocked);
